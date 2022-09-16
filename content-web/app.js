@@ -4,6 +4,12 @@ const path = require('path');
 const request = require('request');
 
 const app = express();
+// set up rate limiter: maximum of five requests per minute
+   var RateLimit = require('express-rate-limit');
+  var limiter = new RateLimit({
+   windowMs: 1*60*1000, // 1 minute
+   max: 5
+   });
 
 app.use(express.static(path.join(__dirname, 'dist/content-web')));
 const contentApiUrl = process.env.CONTENT_API_URL || "http://localhost:3001";
